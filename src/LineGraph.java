@@ -4,36 +4,46 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-class GUI implements ActionListener{
-
-	JPanel gui= new JPanel(new GridBagLayout());
-	TextField radius = new TextField();
-	TextField num = new TextField();
-    Choice selector = new Choice();
-    Checkbox g1 = new Checkbox("ASS");
-    Checkbox g2 = new Checkbox("CLOWNS");
+class LineGraph implements ActionListener{
+	JFrame simpleframe;
 	
-	GUI() {
-       
+	LineGraph(int num, double radius, int type, boolean graph) {
+        JPanel gui = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         
         c.fill = GridBagConstraints.NONE;
         gui.add(new Label("radius"),c);
         c.gridwidth = GridBagConstraints.REMAINDER;
-        gui.add(radius,c);
+        gui.add(new TextField(Double.toString(radius)),c);
         
         
         c.gridwidth = GridBagConstraints.RELATIVE;
         gui.add(new Label("number of sensors"),c);
         c.gridwidth = GridBagConstraints.REMAINDER;
-        gui.add(num,c);
+        gui.add(new TextField(Integer.toString(num)),c);
         
         gui.add(new Label(""),c);
         
-        selector.add("Green");
+        Choice selector = new Choice();
+		selector.add("Green");
         selector.add("Red");
         selector.add("Blue");
         selector.add("DickButt");
+        
+        switch (type){
+        	case 0:
+                selector.select(0);
+                break;
+        	case 1:
+                selector.select(1);
+                break;
+        	case 2:
+                selector.select(2);
+                break;
+        	case 3:
+            	selector.select(3);
+        		break;
+        }
         
         gui.add(selector, c);
         
@@ -41,9 +51,16 @@ class GUI implements ActionListener{
         
         CheckboxGroup graphs = new CheckboxGroup();
         
+        Checkbox g1 = new Checkbox("ASS");
+        Checkbox g2 = new Checkbox("CLOWNS");
         
         g1.setCheckboxGroup(graphs);
         g2.setCheckboxGroup(graphs);
+        
+        if(graph)
+        	g2.setState(true);
+        else
+        	g1.setState(true);
         
         c.gridwidth = GridBagConstraints.RELATIVE;
         gui.add(g1,c);
@@ -59,8 +76,7 @@ class GUI implements ActionListener{
         
         
         
-       JFrame simpleframe = new JFrame("Sensor Controller");
-       simpleframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       JFrame simpleframe = new JFrame("Line Graph");
        simpleframe.setSize(250, 300);
        simpleframe.add(gui);
        simpleframe.setVisible(true);
@@ -68,28 +84,5 @@ class GUI implements ActionListener{
     }
 	
 	public void actionPerformed(ActionEvent e){
-		 EventQueue.invokeLater(new Runnable() {
-	            @Override
-	            public void run() {
-	            	try{
-	            	if(g1.getState())
-	            		new LineGraph(Integer.parseInt(num.getText()),Double.parseDouble(radius.getText()), selector.getSelectedIndex(), false);
-	            	else
-	            		new LineGraph(Integer.parseInt(num.getText()),Double.parseDouble(radius.getText()), selector.getSelectedIndex(), true);
-	            	}
-	            	catch(Exception e)
-	            	{JOptionPane.showMessageDialog(null, "ERROR PLEASE CORRECT INPUT");}
-	            }
-	        });
 	}
-
-    public static void main(String[] args) {
-
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new GUI();
-            }
-        });
-    }
 }
