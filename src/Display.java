@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Display {
@@ -17,20 +18,7 @@ public class Display {
 		
 		if(data.barGraph){
 			//Draw the circles on the line
-			panel = new JPanel(new BorderLayout()) {
-				public void paintComponent(Graphics g){
-					g.drawLine(10, window.getHeight()/2, window.getWidth()-25, window.getHeight()/2);
-					for (int i=0; i<data.nodes.size(); i++){
-					//draw circle(s) at location
-						int diameter = (int) ((window.getWidth()-25-10)*(2 * data.r));
-						int xPos = (int) (10+(window.getWidth()-25-10)*data.nodes.get(i)-(diameter/2));
-						
-						g.drawOval(xPos, window.getHeight()/2-(diameter/2), diameter, diameter);
-
-						g.drawLine(xPos+(diameter/2), window.getHeight()/2-(diameter/2), xPos+(diameter/2), window.getHeight()/2+(diameter/2));
-					}
-				}
-			};
+			panel = new AnimationPanel(this);
 			
 		} else {
 			//draw the line graph
@@ -54,13 +42,18 @@ public class Display {
 		//can be edited to change the algorithm, currently only does 1
 		switch(data.algoNum){
 			default:
+				testAlgo();
 				break;
 		}
 		
 		panel.repaint();
 	}
 	
-	
+	public void testAlgo(){
+		for(int i=0; i<data.nodes.size();i++){
+			data.nodes.set(i, (data.nodes.get(i)+0.1));
+		}
+	}
 	
 	
 	
