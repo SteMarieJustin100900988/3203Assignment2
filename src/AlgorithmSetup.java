@@ -11,7 +11,9 @@ public class AlgorithmSetup {
 	int algoNum; //which algorithm to execute
 	boolean barGraph; //whether to use bar graph display (part 1) (true) or line graph (part 2)(false)
 	double bufferSize; //size of buffer used in some algorithms
-	double sum = 0;
+	double sum = 0; //total amount of movement
+	
+	
 	
 	ArrayList<Double> nodes;
 
@@ -34,8 +36,6 @@ public class AlgorithmSetup {
 			temp = generator.nextDouble();
 			nodes.add(temp);
 		}
-
-		//*@TESTCODE*/printArrayList(nodes);
 		
 		//sorts the nodes
 		for(int i=0; i<numNodes-1; i++){
@@ -47,20 +47,6 @@ public class AlgorithmSetup {
 				}
 			}
 		}
-		
-		//*@TESTCODE*/printArrayList(nodes);
-		
-		//*@TESTCODE*/System.out.println("Buffer size: "+bufferSize);
 	}
-	/*
-	private void printArrayList(ArrayList l){ //@TESTCODE
-		System.out.print("ArrayList [");
-		
-		for (int i=0; i<l.size()-1; i++){
-			System.out.print(l.get(i)+", ");
-		}
-		
-		System.out.println(l.get(l.size()-1)+"].");
-	}*/
 	
 }
