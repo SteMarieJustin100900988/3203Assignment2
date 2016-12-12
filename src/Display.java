@@ -41,7 +41,6 @@ public class Display {
 	public void updateCurrentState(){
 		//can be edited to change the algorithm, currently only does 1
 		switch(data.algoNum){
-<<<<<<< HEAD
 			case 0:
 				for(int i = 0; i < data.nodes.size();i++)
 				{
@@ -51,10 +50,8 @@ public class Display {
 						data.nodes.set(i, ((2*(i+1)-1)*data.r));
 					}
 				}
-=======
 			default:
 				testAlgo();
->>>>>>> origin/master
 				break;
 		}
 		
@@ -63,7 +60,7 @@ public class Display {
 	
 	public void testAlgo(){
 		for(int i=0; i<data.nodes.size();i++){
-			data.nodes.set(i, (data.nodes.get(i)+0.1));
+			//data.nodes.set(i, (data.nodes.get(i)+0.1));
 		}
 	}
 	
