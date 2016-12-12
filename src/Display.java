@@ -8,7 +8,6 @@ public class Display {
 	JFrame window;
 	JPanel panel;
 	int currentIterationLocation;
-<<<<<<< HEAD
 	
 	//used for graph only
 	ArrayList<Double> sumAtTime;
@@ -16,10 +15,8 @@ public class Display {
 	ArrayList<Integer> numberAtTime;
 	int numIterATM; //number of iterations for the current data
 	int varyingDataLocation; //how many times the data has been changed
-=======
 	boolean secondpass = false;
 	double buffer = 0.0000001;//acceptable overlap buffer to account for calculation error due to rounding
->>>>>>> origin/master
 
 	Display (AlgorithmSetup algoData){
 		data = algoData;
@@ -188,6 +185,8 @@ public class Display {
 							}
 						}
 						currentIterationLocation--;
+					} else if (!data.barGraph){ //if we need multiple loops
+						updateIteration();
 					}
 				}
 				break;
@@ -250,7 +249,8 @@ public class Display {
 							}
 						}
 					}
-					
+				} else if (!data.barGraph){ //if we need multiple loops
+					updateIteration();
 				}
 				break;
 			default:
