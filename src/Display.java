@@ -111,8 +111,6 @@ public class Display {
 					currentIterationLocation++;
 				} else if (!data.barGraph){ //if we need multiple loops
 					updateIteration();
-					if(window.isVisible())
-						System.out.println(data.sum);
 				}
 				break;
 				
@@ -133,10 +131,10 @@ public class Display {
 						}
 						else
 						{
-							if(data.nodes.get(currentIterationLocation) > data.nodes.get(currentIterationLocation-1)+(2*data.r))
+							if(data.nodes.get(currentIterationLocation) > data.nodes.get(currentIterationLocation-1)+(2.0*data.r))
 							{
-								data.sum += Math.abs(data.nodes.get(currentIterationLocation)-(data.nodes.get(currentIterationLocation-1)+(2*data.r)));
-								data.nodes.set(currentIterationLocation, (data.nodes.get(currentIterationLocation-1)+(2*data.r)));
+								data.sum += Math.abs(data.nodes.get(currentIterationLocation)-(data.nodes.get(currentIterationLocation-1)+(2.0*data.r)));
+								data.nodes.set(currentIterationLocation, (data.nodes.get(currentIterationLocation-1)+(2.0*data.r)));
 							}
 						}
 						currentIterationLocation++;
@@ -159,20 +157,22 @@ public class Display {
 							overlap = true;
 						
 						if(i>0)
-							if(Math.abs(data.nodes.get(i)-data.nodes.get(i-1)) < 2*data.r-buffer)
+							if(Math.abs(data.nodes.get(i)-data.nodes.get(i-1)) < 2.0*data.r-buffer)
 							{
 								overlap = true;
 							}
 						
 								
 						if(i < data.nodes.size()-1)
-							if(Math.abs(data.nodes.get(i)-data.nodes.get(i+1)) < 2*data.r-buffer)
+							if(Math.abs(data.nodes.get(i)-data.nodes.get(i+1)) < 2.0*data.r-buffer)
 							{
 								overlap = true;
 							}
 					}
 					if(!overlap){
 						if (!data.barGraph){ //if we need multiple loops
+							if(window.isVisible())
+								System.out.println(data.sum);
 							updateIteration();
 						}
 						break;
@@ -181,18 +181,18 @@ public class Display {
 					{
 						if(currentIterationLocation == data.nodes.size()-1)
 						{
-							if(data.nodes.get(currentIterationLocation) < 1-data.r)
+							if(data.nodes.get(currentIterationLocation) < 1.0-data.r)
 							{
 								data.sum += Math.abs(data.nodes.get(currentIterationLocation)-data.r);
-								data.nodes.set(currentIterationLocation, 1-data.r);
+								data.nodes.set(currentIterationLocation, 1.0-data.r);
 							}
 						}
 						else
 						{
-							if(data.nodes.get(currentIterationLocation) < data.nodes.get(currentIterationLocation+1)-(2*data.r))
+							if(data.nodes.get(currentIterationLocation) < data.nodes.get(currentIterationLocation+1)-(2.0*data.r))
 							{
-								data.sum += Math.abs(data.nodes.get(currentIterationLocation)-(data.nodes.get(currentIterationLocation+1)-(2*data.r)));
-								data.nodes.set(currentIterationLocation, (data.nodes.get(currentIterationLocation+1)-(2*data.r)));
+								data.sum += Math.abs(data.nodes.get(currentIterationLocation)-(data.nodes.get(currentIterationLocation+1)-(2.0*data.r)));
+								data.nodes.set(currentIterationLocation, (data.nodes.get(currentIterationLocation+1)-(2.0*data.r)));
 							}
 						}
 						currentIterationLocation--;
@@ -263,6 +263,8 @@ public class Display {
 						}
 					}
 				} else if (!data.barGraph){ //if we need multiple loops
+					if(window.isVisible())
+						System.out.println(data.sum);
 					updateIteration();
 				}
 				break;
