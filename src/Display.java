@@ -54,10 +54,10 @@ public class Display {
 	public void updateGraphState(){
 		while(varyingDataLocation < 11){
 			sumAtTime.add(0.0);
-			while(numIterATM < 20){
+			while(numIterATM < 60){
 				updateCurrentState();
 			}
-			sumAtTime.set(varyingDataLocation, sumAtTime.get(varyingDataLocation)/20.0); //sets average for current data
+			sumAtTime.set(varyingDataLocation, sumAtTime.get(varyingDataLocation)/60.0); //sets average for current data
 			radiusAtTime.add(data.r);
 			numberAtTime.add(data.nodes.size());
 			
@@ -87,7 +87,9 @@ public class Display {
 					updateIteration();
 				}
 				break;
-			case 1:
+				
+				
+			case 1: //Simple Algorithm
 				if (currentIterationLocation < data.nodes.size())
 				{
 					if(currentIterationLocation == 0)
@@ -111,7 +113,10 @@ public class Display {
 					updateIteration();
 				}
 				break;
-			case 2:
+				
+				
+				
+			case 2: //Simple Double Pass
 				if (!secondpass)
 				{
 					if (currentIterationLocation < data.nodes.size())
@@ -164,8 +169,12 @@ public class Display {
 								overlap = true;
 							}
 					}
-					if(!overlap)
+					if(!overlap){
+						if (!data.barGraph){ //if we need multiple loops
+							updateIteration();
+						}
 						break;
+					}
 					if (currentIterationLocation >= 0)
 					{
 						if(currentIterationLocation == data.nodes.size()-1)
@@ -190,8 +199,12 @@ public class Display {
 					}
 				}
 				break;
-			case 3:
 				
+				
+				
+				
+				
+			case 3: //Hybrid Algorithm
 				if(currentIterationLocation < data.nodes.size()){
 					if(data.bufferSize <= 0 || data.bufferSize%(2*data.r) <= 0)
 					{
@@ -253,6 +266,7 @@ public class Display {
 					updateIteration();
 				}
 				break;
+				
 			default:
 				testAlgo();
 				break;

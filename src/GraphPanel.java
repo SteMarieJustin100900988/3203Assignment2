@@ -66,7 +66,7 @@ public class GraphPanel extends JPanel implements ActionListener {
 		}
 		
 		//drawing text
-        g.drawString(Integer.toString((int)(highest+1)), leftL-20, topL);
+        g.drawString(Long.toString(Math.round(highest)), leftL-20, topL);
         g.drawString("0", leftL-15, bottomL-1);
        // g.drawString(Integer.toString((int)(highestRad)), rightL+15, bottomL+15);
 		
@@ -80,11 +80,12 @@ public class GraphPanel extends JPanel implements ActionListener {
 			//g.drawString("i = "+Double.toString(digit),xv2,yv2);
 			g.drawString("i = "+Integer.toString(i),xv2,yv2);
 		}
+        //initial radius
 		g.drawString("r = "+Double.toString((double)((int)(parent.radiusAtTime.get(0)*100))/100.0),
 				(pww-leftL-45)+10, bottomL+32);
         
-		g.drawString("r = 2^(1-i)n / 2n)", (pww-leftL-45)/2, bottomL+32);
-		g.drawString("n = "+Integer.toString(parent.data.nodes.size()), (pww-leftL-45)/2, topL-15);
+		g.drawString("r = 2^(1-i)n / 2n)", (pww-leftL-45)/2, bottomL+32);//radius formula
+		g.drawString("n = "+Integer.toString(parent.data.nodes.size()), (pww-leftL-45)/2, topL-15); //node number
 		
 		//text 'movement'
 		g.drawString("m", leftL-25, (pwh-topL-75)/2-15);
