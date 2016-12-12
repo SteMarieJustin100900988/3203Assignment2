@@ -63,7 +63,7 @@ public class Display {
 	
 	public void testAlgo(){
 		for(int i=0; i<data.nodes.size();i++){
-			data.nodes.set(i, (data.nodes.get(i)+0.1));
+			data.nodes.set(i, (data.nodes.get(i)+0.01));
 		}
 	}
 	
