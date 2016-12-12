@@ -30,7 +30,7 @@ class GUI implements ActionListener{
         
         gui.add(new Label(""),c);
         
-        selector.add("Green");
+        selector.add("Rigid");
         selector.add("Red");
         selector.add("Blue");
         selector.add("DickButt");
@@ -72,7 +72,7 @@ class GUI implements ActionListener{
 	            @Override
 	            public void run() {
 	            	try{
-	            	if(g1.getState())
+	            	if(!g1.getState())
 	            		new Display(new AlgorithmSetup(Integer.parseInt(num.getText()),Double.parseDouble(radius.getText()), selector.getSelectedIndex(), false));
 	            	else
 	            		new Display(new AlgorithmSetup(Integer.parseInt(num.getText()),Double.parseDouble(radius.getText()), selector.getSelectedIndex(), true));
