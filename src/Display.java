@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Display {
@@ -9,6 +8,13 @@ public class Display {
 	JFrame window;
 	JPanel panel;
 	int currentIterationLocation;
+	
+	//used for graph only
+	ArrayList<Double> sumAtTime;
+	ArrayList<Double> radiusAtTime;
+	ArrayList<Integer> numberAtTime;
+	int numIterATM; //number of iterations for the current data
+	int varyingDataLocation; //how many times the data has been changed
 
 	Display (AlgorithmSetup algoData){
 		data = algoData;
@@ -17,23 +23,47 @@ public class Display {
 		window = new JFrame();
 		window.setSize(720, 600);
 		
-		
+
 		if(data.barGraph){
 			//Draw the circles on the line
 			panel = new AnimationPanel(this);
 			
 		} else {
 			//draw the line graph
-			panel = new JPanel(new BorderLayout()) {
-				public void paintComponent(Graphics g){
-					//do the thing
-				}
-			};
+			sumAtTime = new ArrayList<Double>();
+			radiusAtTime = new ArrayList<Double>();
+			numberAtTime = new ArrayList<Integer>();
+			numIterATM = 0;
+			varyingDataLocation = 0;
+			
+			panel = new GraphPanel(this);
 		}
 
 		window.add(panel);
 		window.setVisible(true);
-		updateCurrentState();
+		
+		if(data.barGraph){
+			updateCurrentState();
+		} else {
+			updateGraphState();
+		}
+	}
+	
+	public void updateGraphState(){
+		while(varyingDataLocation < 11){
+			sumAtTime.add(0.0);
+			while(numIterATM < 20){
+				updateCurrentState();
+			}
+			sumAtTime.set(varyingDataLocation, sumAtTime.get(varyingDataLocation)/20.0); //sets average for current data
+			radiusAtTime.add(data.r);
+			numberAtTime.add(data.nodes.size());
+			
+			numIterATM = 0;
+			varyingDataLocation++;
+			data.reboot(data.r/2.0);
+			panel.repaint();
+		}
 	}
 
 	
@@ -43,7 +73,7 @@ public class Display {
 	public void updateCurrentState(){
 		//can be edited to change the algorithm, currently only does 1
 		switch(data.algoNum){
-			case 0:
+			case 0: //Rigid Algorithm
 				if(currentIterationLocation < data.nodes.size()){
 					if((2*(currentIterationLocation+1)-1)*data.r < 1)
 					{
@@ -51,6 +81,8 @@ public class Display {
 						data.nodes.set(currentIterationLocation, ((2*(currentIterationLocation+1)-1)*data.r));
 					}
 					currentIterationLocation++;
+				} else if (!data.barGraph){ //if we need multiple loops
+					updateIteration();
 				}
 				break;
 			case 1:
@@ -73,14 +105,22 @@ public class Display {
 						}
 					}
 					currentIterationLocation++;
+				} else if (!data.barGraph){ //if we need multiple loops
+					updateIteration();
 				}
 				break;
 			default:
 				testAlgo();
 				break;
 		}
-		
-		panel.repaint();
+	}
+
+	//for line graph only - resets and stores information
+	private void updateIteration() {
+		currentIterationLocation = 0;
+		sumAtTime.set(varyingDataLocation, sumAtTime.get(varyingDataLocation)+data.sum);
+		data.reboot();
+		numIterATM++;
 	}
 	
 	public void testAlgo(){
@@ -88,6 +128,7 @@ public class Display {
 			data.nodes.set(i, (data.nodes.get(i)+0.01));
 		}
 	}
+	
 	
 	
 	

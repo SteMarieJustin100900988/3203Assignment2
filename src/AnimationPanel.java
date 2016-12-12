@@ -34,6 +34,7 @@ public class AnimationPanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent ev){
 		if(ev.getSource()==timer){
 	      parent.updateCurrentState();
+	      this.repaint();
 	    }
 	 }
 }
