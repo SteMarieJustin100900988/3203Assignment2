@@ -31,7 +31,7 @@ class GUI implements ActionListener{
         gui.add(new Label(""),c);
         
         selector.add("Rigid");
-        selector.add("Red");
+        selector.add("Simple");
         selector.add("Blue");
         selector.add("DickButt");
         
