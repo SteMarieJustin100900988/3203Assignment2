@@ -10,8 +10,8 @@ class GUI implements ActionListener{
 	TextField radius = new TextField();
 	TextField num = new TextField();
     Choice selector = new Choice();
-    Checkbox g1 = new Checkbox("ASS");
-    Checkbox g2 = new Checkbox("CLOWNS");
+    Checkbox g1 = new Checkbox("Animated");
+    Checkbox g2 = new Checkbox("Graph");
 	
 	GUI() {
        
@@ -32,8 +32,8 @@ class GUI implements ActionListener{
         
         selector.add("Rigid");
         selector.add("Simple");
-        selector.add("Blue");
-        selector.add("DickButt");
+        selector.add("Simple Double Pass");
+        selector.add("Hybrid");
         
         gui.add(selector, c);
         
