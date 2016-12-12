@@ -72,10 +72,10 @@ class GUI implements ActionListener{
 	            @Override
 	            public void run() {
 	            	try{
-	            	if(g1.getState())
-	            		new Display(new AlgorithmSetup(Integer.parseInt(num.getText()),Double.parseDouble(radius.getText()), selector.getSelectedIndex(), false));
-	            	else
-	            		new Display(new AlgorithmSetup(Integer.parseInt(num.getText()),Double.parseDouble(radius.getText()), selector.getSelectedIndex(), true));
+		            	if(!g1.getState())
+		            		new Display(new AlgorithmSetup(Integer.parseInt(num.getText()),Double.parseDouble(radius.getText()), selector.getSelectedIndex(), false));
+		            	else
+		            		new Display(new AlgorithmSetup(Integer.parseInt(num.getText()),Double.parseDouble(radius.getText()), selector.getSelectedIndex(), true));
 	            	}
 	            	catch(Exception e)
 	            	{JOptionPane.showMessageDialog(null, "ERROR PLEASE CORRECT INPUT");}
