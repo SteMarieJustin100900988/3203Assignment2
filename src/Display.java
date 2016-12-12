@@ -111,6 +111,8 @@ public class Display {
 					currentIterationLocation++;
 				} else if (!data.barGraph){ //if we need multiple loops
 					updateIteration();
+					if(window.isVisible())
+						System.out.println(data.sum);
 				}
 				break;
 				
@@ -250,8 +252,6 @@ public class Display {
 								{
 									data.sum += Math.abs(data.nodes.get(currentIterationLocation)-(1-data.r));
 									data.nodes.set(currentIterationLocation, 1-data.r);
-									if(window.isVisible())
-										System.out.println(currentIterationLocation);
 								}
 								else
 								{
