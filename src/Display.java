@@ -53,30 +53,28 @@ public class Display {
 					currentIterationLocation++;
 				}
 				break;
-<<<<<<< HEAD
 			case 1:
-				for(int i = 0; i < data.nodes.size();i++)
+				if (currentIterationLocation < data.nodes.size())
 				{
-					if(i == 0)
+					if(currentIterationLocation == 0)
 					{
-						if(data.nodes.get(i) > data.r)
+						if(data.nodes.get(currentIterationLocation) > data.r)
 						{
-							data.sum += Math.abs(data.nodes.get(i)-data.r);
-							data.nodes.set(i, data.r);
+							data.sum += Math.abs(data.nodes.get(currentIterationLocation)-data.r);
+							data.nodes.set(currentIterationLocation, data.r);
 						}
 					}
 					else
 					{
-						if(data.nodes.get(i) > data.nodes.get(i-1)+(2*data.r))
+						if(data.nodes.get(currentIterationLocation) > data.nodes.get(currentIterationLocation-1)+(2*data.r))
 						{
-							data.sum += Math.abs(data.nodes.get(i)-(data.nodes.get(i-1)+(2*data.r)));
-							data.nodes.set(i, (data.nodes.get(i-1)+(2*data.r)));
+							data.sum += Math.abs(data.nodes.get(currentIterationLocation)-(data.nodes.get(currentIterationLocation-1)+(2*data.r)));
+							data.nodes.set(currentIterationLocation, (data.nodes.get(currentIterationLocation-1)+(2*data.r)));
 						}
 					}
+					currentIterationLocation++;
 				}
 				break;
-=======
->>>>>>> origin/master
 			default:
 				testAlgo();
 				break;
