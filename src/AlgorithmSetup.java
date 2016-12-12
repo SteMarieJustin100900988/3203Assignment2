@@ -11,6 +11,7 @@ public class AlgorithmSetup {
 	int algoNum; //which algorithm to execute
 	boolean barGraph; //whether to use bar graph display (part 1) (true) or line graph (part 2)(false)
 	double bufferSize; //size of buffer used in some algorithms
+	double sum = 0;
 	
 	ArrayList<Double> nodes;
 

@@ -43,7 +43,7 @@ public class Display {
 
 		window.add(panel);
 		window.setVisible(true);
-		
+		updateCurrentState();
 	}
 
 	
@@ -53,7 +53,15 @@ public class Display {
 	public void updateCurrentState(){
 		//can be edited to change the algorithm, currently only does 1
 		switch(data.algoNum){
-			default:
+			case 0:
+				for(int i = 0; i < data.nodes.size();i++)
+				{
+					if((2*(i+1)-1)*data.r < 1)
+					{
+						data.sum += Math.abs(data.nodes.get(i)-((2*(i+1)-1)*data.r));
+						data.nodes.set(i, ((2*(i+1)-1)*data.r));
+					}
+				}
 				break;
 		}
 		
