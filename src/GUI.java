@@ -73,9 +73,9 @@ class GUI implements ActionListener{
 	            public void run() {
 	            	try{
 	            	if(g1.getState())
-	            		new LineGraph(Integer.parseInt(num.getText()),Double.parseDouble(radius.getText()), selector.getSelectedIndex(), false);
+	            		new Display(new AlgorithmSetup(Integer.parseInt(num.getText()),Double.parseDouble(radius.getText()), selector.getSelectedIndex(), false));
 	            	else
-	            		new LineGraph(Integer.parseInt(num.getText()),Double.parseDouble(radius.getText()), selector.getSelectedIndex(), true);
+	            		new Display(new AlgorithmSetup(Integer.parseInt(num.getText()),Double.parseDouble(radius.getText()), selector.getSelectedIndex(), true));
 	            	}
 	            	catch(Exception e)
 	            	{JOptionPane.showMessageDialog(null, "ERROR PLEASE CORRECT INPUT");}
