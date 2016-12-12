@@ -8,9 +8,11 @@ public class Display {
 	AlgorithmSetup data;
 	JFrame window;
 	JPanel panel;
+	int currentIterationLocation;
 
 	Display (AlgorithmSetup algoData){
 		data = algoData;
+		currentIterationLocation = 0;
 
 		window = new JFrame();
 		window.setSize(720, 600);
@@ -42,15 +44,16 @@ public class Display {
 		//can be edited to change the algorithm, currently only does 1
 		switch(data.algoNum){
 			case 0:
-				for(int i = 0; i < data.nodes.size();i++)
-				{
-					if((2*(i+1)-1)*data.r < 1)
+				if(currentIterationLocation < data.nodes.size()){
+					if((2*(currentIterationLocation+1)-1)*data.r < 1)
 					{
-						data.sum += Math.abs(data.nodes.get(i)-((2*(i+1)-1)*data.r));
-						data.nodes.set(i, ((2*(i+1)-1)*data.r));
+						data.sum += Math.abs(data.nodes.get(currentIterationLocation)-((2*(currentIterationLocation+1)-1)*data.r));
+						data.nodes.set(currentIterationLocation, ((2*(currentIterationLocation+1)-1)*data.r));
 					}
+					currentIterationLocation++;
 				}
 				break;
+<<<<<<< HEAD
 			case 1:
 				for(int i = 0; i < data.nodes.size();i++)
 				{
@@ -72,6 +75,8 @@ public class Display {
 					}
 				}
 				break;
+=======
+>>>>>>> origin/master
 			default:
 				testAlgo();
 				break;
@@ -82,7 +87,7 @@ public class Display {
 	
 	public void testAlgo(){
 		for(int i=0; i<data.nodes.size();i++){
-			//data.nodes.set(i, (data.nodes.get(i)+0.1));
+			data.nodes.set(i, (data.nodes.get(i)+0.01));
 		}
 	}
 	
