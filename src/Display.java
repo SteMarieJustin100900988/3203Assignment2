@@ -16,7 +16,7 @@ public class Display {
 	int numIterATM; //number of iterations for the current data
 	int varyingDataLocation; //how many times the data has been changed
 	boolean secondpass = false;
-	double buffer = 0.0000001;//acceptable overlap buffer to account for calculation error due to rounding
+	double buffer = 0.000000001;//acceptable overlap buffer to account for calculation error due to rounding
 
 	Display (AlgorithmSetup algoData){
 		data = algoData;
@@ -75,11 +75,13 @@ public class Display {
 	public void updateCurrentState(){
 		//can be edited to change the algorithm, currently only does 1
 		switch(data.algoNum){
+			//for all algorithms we are working with nodes is sorted order left -> right
 			case 0: //Rigid Algorithm
+				//line sensors up end to end left to right
 				if(currentIterationLocation < data.nodes.size()){
 					if((2*(currentIterationLocation+1)-1)*data.r < 1)
 					{
-						data.sum += Math.abs(data.nodes.get(currentIterationLocation)-((2*(currentIterationLocation+1)-1)*data.r));
+						data.sum += Math.abs(data.nodes.get(currentIterationLocation)-((2*(currentIterationLocation+1)-1)*data.r));//add movement to get total
 						data.nodes.set(currentIterationLocation, ((2*(currentIterationLocation+1)-1)*data.r));
 					}
 					currentIterationLocation++;
@@ -90,9 +92,10 @@ public class Display {
 				
 				
 			case 1: //Simple Algorithm
+				//fill gaps to the left of each node 
 				if (currentIterationLocation < data.nodes.size())
 				{
-					if(currentIterationLocation == 0)
+					if(currentIterationLocation == 0)//first node
 					{
 						if(data.nodes.get(currentIterationLocation) > data.r)
 						{
@@ -100,7 +103,7 @@ public class Display {
 							data.nodes.set(currentIterationLocation, data.r);
 						}
 					}
-					else
+					else//every node after
 					{
 						if(data.nodes.get(currentIterationLocation) > data.nodes.get(currentIterationLocation-1)+(2*data.r))
 						{
@@ -117,8 +120,10 @@ public class Display {
 				
 				
 			case 2: //Simple Double Pass
+				//fill gaps to the left of each node then pass backwards to fill gaps to the right to achieve maximum coverage
 				if (!secondpass)
 				{
+					//first pass same as simple coverage
 					if (currentIterationLocation < data.nodes.size())
 					{
 						if(currentIterationLocation == 0)
@@ -169,16 +174,15 @@ public class Display {
 								overlap = true;
 							}
 					}
-					if(!overlap){
+					if(!overlap){//if we have achieved maximum coverage stop moving nodes
 						if (!data.barGraph){ //if we need multiple loops
-							if(window.isVisible())
-								System.out.println(data.sum);
 							updateIteration();
 						}
 						break;
 					}
 					if (currentIterationLocation >= 0)
 					{
+						//simple algorithm right to left
 						if(currentIterationLocation == data.nodes.size()-1)
 						{
 							if(data.nodes.get(currentIterationLocation) < 1.0-data.r)
@@ -207,8 +211,9 @@ public class Display {
 				
 				
 			case 3: //Hybrid Algorithm
+				//move pieces only if we need to to achieve full coverage
 				if(currentIterationLocation < data.nodes.size()){
-					if(data.bufferSize <= 0 || data.bufferSize%(2*data.r) <= 0)
+					if(data.bufferSize <= 0 || data.bufferSize%(2*data.r) <= 0)//if we have <= enough sensors then perform standard rigid algorithm
 					{
 						if((2*(currentIterationLocation+1)-1)*data.r < 1)
 						{
@@ -218,17 +223,17 @@ public class Display {
 						currentIterationLocation++;
 					}
 					else
-					{
+					{//move pieces based on how much space we have in the buffer
 						if(currentIterationLocation == 0)
 						{
 							if(Math.abs(data.nodes.get(currentIterationLocation)-data.r) < data.bufferSize%(2*data.r))
-							{
-								data.bufferSize -= Math.abs(data.nodes.get(currentIterationLocation)-data.r);
+							{//if we can still achieve full coverage without moving this node then reduce the buffer to account for it and move on
+								data.bufferSize -= (2*data.r)-Math.abs(data.nodes.get(currentIterationLocation)-data.r);
 
 								currentIterationLocation++;
 							}
 							else
-							{
+							{//rigid movement if we can't spare space
 								data.sum += Math.abs(data.nodes.get(currentIterationLocation)-data.r);
 								data.nodes.set(currentIterationLocation, data.r);
 								currentIterationLocation++;
@@ -237,8 +242,8 @@ public class Display {
 						else
 						{
 							if(Math.abs(data.nodes.get(currentIterationLocation)-(data.nodes.get(currentIterationLocation-1))) < data.bufferSize%(data.nodes.size()*2*data.r) && Math.abs(data.nodes.get(currentIterationLocation)-(data.nodes.get(currentIterationLocation-1))) < (2*data.r))
-							{
-								for(int i = 0;i < currentIterationLocation;i++)
+							{//if we have the buffer space and there is no gap to the left of the node reduce the buffer
+								for(int i = 0;i < currentIterationLocation;i++)//reduce buffer based on every node this one overlaps to it's left
 								{
 									if(Math.abs(data.nodes.get(currentIterationLocation)-(data.nodes.get(i))) < (2*data.r))
 										data.bufferSize -= (2*data.r)-Math.abs(data.nodes.get(currentIterationLocation)-(data.nodes.get(i)));
@@ -247,7 +252,7 @@ public class Display {
 								currentIterationLocation++;
 							}
 							else
-							{
+							{//move nodes we need to move buy putting them next to their left neighbor
 								if(data.nodes.get(currentIterationLocation-1)+(2*data.r) > 1-data.r)
 								{
 									data.sum += Math.abs(data.nodes.get(currentIterationLocation)-(1-data.r));
@@ -263,8 +268,6 @@ public class Display {
 						}
 					}
 				} else if (!data.barGraph){ //if we need multiple loops
-					if(window.isVisible())
-						System.out.println(data.sum);
 					updateIteration();
 				}
 				break;
